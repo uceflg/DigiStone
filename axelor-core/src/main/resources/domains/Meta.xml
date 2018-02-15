@@ -86,7 +86,7 @@
     <many-to-many name="roles" ref="com.axelor.auth.db.Role"/>
 
     <finder-method name="findByID" using="xmlId" cacheable="true" />
-    <finder-method name="findByName" using="name" orderBy="-order" cacheable="true"/>
+    <finder-method name="findByName" using="name" orderBy="-priority" cacheable="true"/>
     <finder-method name="findByParent" using="Long:id" filter="self.parent.id = :id" all="true" cacheable="true"/>
     <finder-method name="findByModule" using="module" all="true" cacheable="true"/>
   </entity>
