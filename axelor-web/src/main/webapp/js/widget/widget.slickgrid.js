@@ -209,7 +209,7 @@ var Editor = function(args) {
 		} else {
 			element.find(':input:first').focus().select();
 		}
-		if (element.is('[x-cell-css*=select-item]') && element.scope().showSelection && !args.grid._noSelect) {
+		if (element.is('[x-cell-css*=select-item]') && element.scope().showSelection) {
 			element.scope().showSelection(300);
 		}
 	}
@@ -1911,12 +1911,7 @@ Grid.prototype.setEditors = function(form, formScope, forEdit) {
 			grid.setActiveCell(cell.row, cell.cell);
 			
 			if (editor) {
-				grid._noSelect = true;
 				grid.editActiveCell();
-				setTimeout(function () {
-					grid._noSelect = false;
-				}, 100);
-				grid.focus();
 			}
 		}
 	};
