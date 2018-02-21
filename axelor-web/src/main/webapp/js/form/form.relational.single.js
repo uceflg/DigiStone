@@ -436,6 +436,7 @@ ui.formInput('ManyToOne', 'Select', {
 		});
 
 		scope.handleSelect = function(e, ui) {
+			var handled = false;
 			if (ui.item.click) {
 				setTimeout(function(){
 					input.val("");
@@ -443,9 +444,14 @@ ui.formInput('ManyToOne', 'Select', {
 				ui.item.click.call(scope);
 			} else {
 				scope.select(ui.item.value);
+				handled = true;
 			}
-			setTimeout(adjustPadding, 100);
-			scope.applyLater();
+			scope.$timeout(function () {
+				adjustPadding();
+				if (scope.onChangeNotify && handled) {
+					scope.onChangeNotify(scope, scope.record, scope.field.name);
+				}
+			}, 100);
 		};
 		
 		scope.$render_editable = function() {
