@@ -366,7 +366,7 @@ ui.formInput('ManyToOne', 'Select', {
 					});
 				}
 				
-				if (field.create && term && scope.canNew()) {
+				if (field.create && term && scope.canNew() && scope.hasPermission('write')) {
 					items.push({
 						label : _t('Create "{0}" and select...', term),
 						click : function() { create(term); }
@@ -377,7 +377,7 @@ ui.formInput('ManyToOne', 'Select', {
 					});
 				}
 				
-				if ((field.create === undefined || (field.create && !term)) && scope.canNew()) {
+				if ((field.create === undefined || (field.create && !term)) && scope.canNew() && scope.hasPermission('write')) {
 					items.push({
 						label: _t("Create..."),
 						click: function() { scope.showPopupEditor(); }
