@@ -395,7 +395,9 @@ function DMSFileListCtrl($scope, $element) {
 			} else {
 				res.parent = null;
 			}
-			$scope.addRelatedValues(res, toFolder);
+			// reset related record
+			res.relatedId = null;
+			res.relatedModel = null;
 			return res;
 		});
 
