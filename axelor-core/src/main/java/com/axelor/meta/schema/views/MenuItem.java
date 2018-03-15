@@ -27,16 +27,10 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @XmlType
-public class MenuItem extends AbstractWidget {
+public class MenuItem extends SimpleWidget {
 
 	@XmlAttribute(name = "id")
 	private String xmlId;
-
-	@XmlAttribute
-	private String name;
-
-	@XmlAttribute
-	private String title;
 
 	@XmlAttribute
 	private String parent;
@@ -72,18 +66,6 @@ public class MenuItem extends AbstractWidget {
 	private String category;
 
 	@XmlAttribute
-	private Boolean hidden;
-
-	@XmlAttribute
-	private String showIf;
-
-	@XmlAttribute
-	private String hideIf;
-
-	@XmlAttribute
-	private String readonlyIf;
-
-	@XmlAttribute
 	private String tag;
 
 	@XmlAttribute(name = "tag-get")
@@ -101,14 +83,6 @@ public class MenuItem extends AbstractWidget {
 
 	public void setXmlId(String xmlId) {
 		this.xmlId = xmlId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getParent() {
@@ -167,20 +141,6 @@ public class MenuItem extends AbstractWidget {
 		this.category = category;
 	}
 
-	@JsonGetter("title")
-	public String getLocalizedTitle() {
-		return I18n.get(title);
-	}
-
-	@JsonIgnore
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getIcon() {
 		return icon;
 	}
@@ -220,39 +180,7 @@ public class MenuItem extends AbstractWidget {
 	}
 
 	public Boolean getIsFolder() {
-		return Query.of(MetaMenu.class).filter("self.parent.name = ?1", name).cacheable().count() > 0;
-	}
-
-	public Boolean getHidden() {
-		return hidden;
-	}
-
-	public void setHidden(Boolean hidden) {
-		this.hidden = hidden;
-	}
-
-	public String getShowIf() {
-		return showIf;
-	}
-
-	public void setShowIf(String showIf) {
-		this.showIf = showIf;
-	}
-
-	public String getHideIf() {
-		return hideIf;
-	}
-
-	public void setHideIf(String hideIf) {
-		this.hideIf = hideIf;
-	}
-
-	public String getReadonlyIf() {
-		return readonlyIf;
-	}
-
-	public void setReadonlyIf(String readonlyIf) {
-		this.readonlyIf = readonlyIf;
+		return Query.of(MetaMenu.class).filter("self.parent.name = ?1", getName()).cacheable().count() > 0;
 	}
 
 	@JsonIgnore
