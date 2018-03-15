@@ -363,7 +363,6 @@ function RefFieldCtrl($scope, $element, DataSource, ViewService, initCallback) {
 		var params = {
 			filter: filter,
 			fields: fields,
-			archived: true,
 			sortBy: sortBy,
 			limit: limit
 		};
