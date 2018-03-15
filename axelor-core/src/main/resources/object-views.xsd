@@ -267,6 +267,7 @@
             </xsd:element>
           </xsd:choice>
         </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" />
         <xsd:attribute name="title" type="xsd:string" use="required">
           <xsd:annotation>
             <xsd:documentation>The display text</xsd:documentation>
