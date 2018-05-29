@@ -1,8 +1,8 @@
-# 3.4.3 (2018-05-29)
+#  Current (3.4.4)
 
 ## Bug fixes
 
-- fix duplicate file name count issue
+## Improvements
 
 # 3.4.2 (2017-07-24)
 
