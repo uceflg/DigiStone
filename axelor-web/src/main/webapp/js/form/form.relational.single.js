@@ -738,7 +738,7 @@ ui.formInput('RefItem', 'ManyToOne', {
 			return (scope.record||{})[ref];
 		}
 
-		function setRef(value) {
+		function setRef(value, fireOnChange) {
 			if (!scope.record) {
 				return;
 			}
@@ -746,7 +746,7 @@ ui.formInput('RefItem', 'ManyToOne', {
 			var old = scope.record[ref];
 			scope.record[ref] = value;
 			
-			if (old != value) {
+			if (fireOnChange && old != value) {
 				scope.refFireEvent('onChange');
 			}
 		}
@@ -754,9 +754,9 @@ ui.formInput('RefItem', 'ManyToOne', {
 		scope.targetValue = target;
 
 		var __setValue = scope.setValue;
-		scope.setValue = function(value) {
+		scope.setValue = function(value, fireOnChange) {
 			__setValue.call(scope, value);
-			setRef(value ? value.id : 0);
+			setRef(value ? value.id : 0, fireOnChange);
 		};
 
 		var selected = false;
