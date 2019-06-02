@@ -2235,6 +2235,9 @@ Grid.prototype.onSelectionChanged = function(event, args) {
     .each(function () {
       $(this).addClass('selected');
     });
+
+  // cancel edit
+  this.cancelEdit();
 };
 
 Grid.prototype.onCellChange = function(event, args) {
