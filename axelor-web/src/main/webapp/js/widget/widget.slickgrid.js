@@ -1890,7 +1890,12 @@ Grid.prototype.showEditor = function (activeCell) {
       if (e.isDefaultPrevented()) return;
       if (e.keyCode === 13) {
         if (that.isEditActive() && e.ctrlKey) {
-          doCommit();
+          doCommit().then(function () {
+            var args = grid.getActiveCell();
+            if (args.row === grid.getDataLength() - 1) {
+              that.addNewRow();
+            }
+          });
         } else {
           that.showEditor();
         }
