@@ -787,6 +787,8 @@ Grid.prototype._doInit = function(view) {
   // end performance tweaks
 
   dataView.$syncSelection = function(old, oldIds, focus) {
+    // cancel edit
+    that.cancelEdit(false);
     var selection = dataView.mapIdsToRows(oldIds || []);
     if (!focus) {
       _.each(dataView.getItems(), function (item, i) {
@@ -1608,7 +1610,6 @@ Grid.prototype.markDirty = function(row, field) {
   grid.render();
 
   this.__markHandlerDirty();
-  this.__beforeSavePending = true;
 };
 
 Grid.prototype.clearDirty = function(row) {
@@ -2300,9 +2301,6 @@ Grid.prototype.onRowsChanged = function(event, args) {
   }
   grid.invalidateRows(args.rows);
   grid.render();
-
-  // cancel edit
-  this.cancelEdit(false);
 };
 
 Grid.prototype.groupBy = function(names) {
