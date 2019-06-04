@@ -1819,7 +1819,7 @@ Grid.prototype.adjustEditor = function () {
 
   form.find('.form-item-container').hide();
 
-  this._editorOverlay.show();
+//  this._editorOverlay.show();
 
   var activeCell = grid.getActiveCell();
   var leftPadding = 0;
@@ -1859,15 +1859,19 @@ Grid.prototype.showEditor = function (activeCell) {
 
   if (this._editorPrepared === undefined) {
     this._editorPrepared = true;
-    this._editorOverlay = this.element.find('.slickgrid-edit-overlay').keydown(function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    });
+    this._editorOverlay = this.element.find('.slickgrid-edit-overlay');
 
     if (this._editorOverlay.size() === 0) {
       this._editorOverlay = $("<div class='slickgrid-edit-overlay'>").hide().appendTo(this.element);
     }
+    
+    this._editorOverlay.keydown(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }).click(function (e) {
+      that.cancelEdit();
+    });
 
     var editor = form.find('form:first');
     var widgets = editor.find("td.form-item > .form-item-container");
@@ -1967,14 +1971,13 @@ Grid.prototype.showEditor = function (activeCell) {
 
 Grid.prototype.cancelEdit = function (focus) {
   if (!this.isEditActive()) return;
-  this.editorForm.fadeOut(200);
+  this.editorForm.hide();
   this.editorScope.edit(null);
-  this._editorOverlay.fadeOut(200);
+//  this._editorOverlay.fadeOut(200);
   this._editorVisible = this.grid._editorVisible = false;
   if (this.handler.dataView.getItemById(0)) {
     this.handler.dataView.deleteItem(0);
   }
-
   if (focus === undefined || focus) {
     var activeCell = this.grid.getActiveCell()
       || this.findNextEditable(this.grid.getDataLength() - 1 , 0)
@@ -2246,6 +2249,24 @@ Grid.prototype.onItemClick = function(event, args) {
   if (this.scope.selector && args.cell === 0) {
     return false;
   }
+  
+  var that = this;
+  var doClick = function () {
+    that.grid.setActiveCell(args.row, args.cell);
+    if (that.canEdit() && that.isCellEditable(args.row, args.cell)) {
+      that.showEditor(args);
+    } else if (that.handler.onItemClick) {
+      that.handler.onItemClick(event, args);
+    }
+  };
+  
+  if (this.isEditActive()) {
+    this.commitEdit().then(doClick);
+  } else {
+    doClick();
+  }
+    
+  return;
 
   this.grid.setActiveCell(args.row, args.cell);
 
