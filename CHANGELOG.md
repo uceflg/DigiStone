@@ -1,4 +1,4 @@
-## 5.1.1 (current)
+## 6.0.0 (current)
 
 TBD
 
