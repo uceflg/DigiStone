@@ -46,9 +46,14 @@
       this._lastDomain = null;
       this._lastContext = null;
       this._lastAction = null;
-      this._showArchived = opts.archived;
 
-      if (opts.archived === undefined && _.has(opts.params || {}, 'showArchived')) {
+      if (opts._archived !== undefined) {
+        this._showArchived = opts._archived;
+      } else if (opts.filter && opts.filter._archived !== undefined) {
+        this._showArchived = opts.filter._archived;
+      }
+
+      if (this._showArchived === undefined && _.has(opts.params || {}, 'showArchived')) {
         this._showArchived = opts.params.showArchived;
       }
 
@@ -249,11 +254,19 @@
         var domain = opts.domain === undefined ? (this._lastDomain || this._domain) : opts.domain;
         var context = opts.context === undefined ? (this._lastContext || this._context) : opts.context;
         var action = opts.action === undefined ? this._lastAction : opts.action;
-        var archived = opts.archived === undefined ? this._showArchived : opts.archived;
 
         var fields = _.isEmpty(opts.fields) ? null : opts.fields;
         var filter = opts.filter || this._filter;
         var sortBy = opts.sortBy || this._sortBy;
+
+        var archived;
+        if (opts._archived !== undefined) {
+          archived = opts._archived;
+        } else if (filter && filter._archived !== undefined) {
+          archived = filter._archived;
+        } else {
+          archived = this._showArchived;
+        }
 
         if (opts.store) {
           this._filter = filter;
@@ -261,10 +274,7 @@
           this._lastDomain = domain;
           this._lastContext = context;
           this._lastAction = action;
-
-          if (opts.archived !== undefined) {
-            this._showArchived = opts.archived;
-          }
+          this._showArchived = archived;
         }
 
         offset = offset || 0;

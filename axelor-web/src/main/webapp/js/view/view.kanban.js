@@ -89,8 +89,8 @@ function BaseCardsCtrl(type, $scope, $element) {
     if (options.criteria || options._domains) {
       opts.filter = options;
     }
-    if (options.archived !== undefined) {
-      opts.archived = options.archived;
+    if (options._archived !== undefined) {
+      opts._archived = options._archived;
     }
     if (view.orderBy) {
       opts.sortBy = view.orderBy.split(',');
@@ -245,8 +245,8 @@ ui.controller("KanbanCtrl", ['$scope', '$element', 'ActionService', function Kan
       options = {
         filter: searchFilter
       };
-      if (searchFilter.archived !== undefined) {
-        options.archived = searchFilter.archived;
+      if (searchFilter._archived !== undefined) {
+        options._archived = searchFilter._archived;
       }
       $scope.$broadcast("on:filter", options);
     }

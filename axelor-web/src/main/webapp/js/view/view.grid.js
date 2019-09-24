@@ -288,8 +288,8 @@ function GridViewCtrl($scope, $element) {
         filter: searchFilter,
         fields: fields
       };
-      if (searchFilter.archived !== undefined) {
-        options.archived = searchFilter.archived;
+      if (searchFilter._archived !== undefined) {
+        options._archived = searchFilter._archived;
       }
       return ds.search(options).then(fixPage);
     }
@@ -453,8 +453,8 @@ function GridViewCtrl($scope, $element) {
         criteria.operator = "and";
       }
     }
-    if (advance && criteria.archived === undefined) {
-      criteria.archived = advance.archived;
+    if (advance && criteria._archived === undefined) {
+      criteria._archived = advance._archived;
     }
     return ds.search(options).then(fixPage);
   };

@@ -696,7 +696,7 @@ function FilterFormCtrl($scope, $element, ViewService) {
   $scope.prepareFilter = function() {
 
     var criteria = {
-      archived: $scope.showArchived,
+      _archived: $scope.showArchived,
       operator: $scope.operator,
       criteria: []
     };

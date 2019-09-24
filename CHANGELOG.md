@@ -1,6 +1,8 @@
 ## 5.0.19 (current)
 
-TBD
+#### Bugs
+
+* Fix "Show archived" when quick search is used beforeĥand
 
 ## 5.0.18 (2019-09-19)
 
